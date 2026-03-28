@@ -31,6 +31,7 @@ RectTransform:
   m_Children:
   - {fileID: 3481623999643052693}
   - {fileID: 8155735599259106330}
+  - {fileID: 9172568143411869195}
   m_Father: {fileID: 2503488906883158455}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -447,6 +448,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e481abf7247ea4bbfba8f71240f946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BottomPanelController
+  m_MainUIManager: {fileID: 839875183504938994}
+  m_PlaceOfInterestButtons:
+  - {fileID: 5888545297267767331}
+  - {fileID: 1209102676749151916}
+  - {fileID: 2207577506371019965}
 --- !u!1 &7769724830222363409
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainUIManager
   m_LondonMapPlane: {fileID: 0}
-  m_BottomPanelController: {fileID: 4723879882421630016}
+  m_CameraController: {fileID: 0}
 --- !u!223 &3610439764768958297
 Canvas:
   m_ObjectHideFlags: 0
@@ -819,6 +825,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlaceOfInterestButton_TowerLondon
       objectReference: {fileID: 0}
+    - target: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Latitude
+      value: 51.5055
+      objectReference: {fileID: 0}
+    - target: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Longitude
+      value: -0.0754
+      objectReference: {fileID: 0}
     - target: {fileID: 8337479575605930201, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
       propertyPath: m_fontSize
       value: 8
@@ -833,6 +847,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
   m_PrefabInstance: {fileID: 1355953452075413523}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5888545297267767331 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+  m_PrefabInstance: {fileID: 1355953452075413523}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7219dcfb3b5f7045a73bed80c9b03e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlaceOfInterestButton
 --- !u!1001 &6029924896212067996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -925,6 +950,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlaceOfInterestButton_BigBen
       objectReference: {fileID: 0}
+    - target: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Latitude
+      value: 51.5007
+      objectReference: {fileID: 0}
+    - target: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Longitude
+      value: -0.1246
+      objectReference: {fileID: 0}
     - target: {fileID: 8337479575605930201, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
       propertyPath: m_text
       value: Big Ben
@@ -938,8 +971,148 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+--- !u!114 &1209102676749151916 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+  m_PrefabInstance: {fileID: 6029924896212067996}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7219dcfb3b5f7045a73bed80c9b03e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlaceOfInterestButton
 --- !u!224 &8155735599259106330 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
   m_PrefabInstance: {fileID: 6029924896212067996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6758747243592379533
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4462627972746622864}
+    m_Modifications:
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661059305979413051, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Name
+      value: PlaceOfInterestButton_BuckinghamPalace
+      objectReference: {fileID: 0}
+    - target: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Latitude
+      value: 51.5014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_Longitude
+      value: -0.14177
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337479575605930201, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_text
+      value: Buckingham Palace
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337479575605930201, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+      propertyPath: m_fontSize
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+--- !u!114 &2207577506371019965 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4857414518090385456, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+  m_PrefabInstance: {fileID: 6758747243592379533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7219dcfb3b5f7045a73bed80c9b03e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlaceOfInterestButton
+--- !u!224 &9172568143411869195 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2486100174462098054, guid: 72b00174885e45b42833ef5f538c0db6, type: 3}
+  m_PrefabInstance: {fileID: 6758747243592379533}
   m_PrefabAsset: {fileID: 0}

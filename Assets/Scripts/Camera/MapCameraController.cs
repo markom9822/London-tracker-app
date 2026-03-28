@@ -1,49 +1,48 @@
 using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
 public class MapCameraController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private LondonGeoTiffPlane m_LondonMapPlane;
 
-    [Header("Settings")]
-    [SerializeField] private float m_ViewAltitude = 2000f; // Height above the map
-    [SerializeField] private float m_LerpSpeed = 5f;      // Smoothness of movement
+    [Header("Offset Settings")]
+    [Tooltip("The rotation of the camera (e.g., 45, 0, 0 for a tilted view)")]
+    [SerializeField] private Vector3 m_RotationOffset = new Vector3(45f, 0f, 0f);
+    
+    [Tooltip("How far back from the Lat/Lon point the camera should sit")]
+    [SerializeField] private float m_ViewDistance = 500f;
 
-    private Vector3 m_TargetPosition;
+    [Header("Movement")]
+    [SerializeField] private float m_LerpSpeed = 5f;
 
-    private void Start()
+    private Vector3 m_TargetPivotPoint;
+
+    /// <summary>
+    /// Instantly snaps the camera using the offset logic
+    /// </summary>
+    public void JumpToLatLon(float lat, float lon)
     {
-        // Initialize position to center of map
-        m_TargetPosition = new Vector3(0, m_ViewAltitude, 0);
-        transform.position = m_TargetPosition;
-        transform.rotation = Quaternion.Euler(90, 0, 0); // Look straight down
+        m_TargetPivotPoint = m_LondonMapPlane.LatLonToWorldPosition(lat, lon);
+        
+        transform.rotation = Quaternion.Euler(m_RotationOffset);
+        transform.position = m_TargetPivotPoint - (transform.forward * m_ViewDistance);
     }
 
     /// <summary>
-    /// Instantly snaps the camera to a Lat/Lon
+    /// Updates the pivot point so the Update loop can lerp the camera
     /// </summary>
-    public void JumpToLatLon(double lat, double lon)
+    public void FlyToLatLon(float lat, float lon)
     {
-        Vector3 mapPos = m_LondonMapPlane.LatLonToWorldPosition(lat, lon);
-        m_TargetPosition = new Vector3(mapPos.x, m_ViewAltitude, mapPos.z);
-        transform.position = m_TargetPosition;
-    }
-
-    /// <summary>
-    /// Smoothly moves the camera to a Lat/Lon (call this from a UI button)
-    /// </summary>
-    public void FlyToLatLon(double lat, double lon)
-    {
-        Vector3 mapPos = m_LondonMapPlane.LatLonToWorldPosition(lat, lon);
-        m_TargetPosition = new Vector3(mapPos.x, m_ViewAltitude, mapPos.z);
+        m_TargetPivotPoint = m_LondonMapPlane.LatLonToWorldPosition(lat, lon);
     }
 
     private void Update()
     {
-        // Smoothly move towards target if you're using FlyToLatLon
-        transform.position = Vector3.Lerp(transform.position, m_TargetPosition, Time.deltaTime * m_LerpSpeed);
+        Quaternion targetRotation = Quaternion.Euler(m_RotationOffset);
+        
+        Vector3 desiredPosition = m_TargetPivotPoint - (targetRotation * Vector3.forward * m_ViewDistance);
+
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * m_LerpSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * m_LerpSpeed);
     }
 }
