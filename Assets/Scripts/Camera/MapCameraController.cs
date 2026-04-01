@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class MapCameraController : MonoBehaviour
 {
     [Header("References")]
@@ -14,14 +17,43 @@ public class MapCameraController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float m_LerpSpeed = 5f;
-
+    
+    [Header("Initialisation")]
+    [SerializeField] private float m_StartLatitude;
+    [SerializeField] private float m_StartLongitude;
+    
     private Vector3 m_TargetPivotPoint;
+    private float m_TargetLatitude;
+    private float m_TargetLongitude;
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public Vector3 TargetPivotPoint => m_TargetPivotPoint;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float TargetLatitude => m_TargetLatitude;
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public float TargetLongitude => m_TargetLongitude;
+
+    private void Start()
+    {
+        JumpToLatLon(m_StartLatitude, m_StartLongitude);
+    }
 
     /// <summary>
     /// Instantly snaps the camera using the offset logic
     /// </summary>
     public void JumpToLatLon(float lat, float lon)
     {
+        m_TargetLatitude = lat;
+        m_TargetLongitude = lon;
+        
         m_TargetPivotPoint = m_LondonMapPlane.LatLonToWorldPosition(lat, lon);
         
         transform.rotation = Quaternion.Euler(m_RotationOffset);
@@ -33,6 +65,8 @@ public class MapCameraController : MonoBehaviour
     /// </summary>
     public void FlyToLatLon(float lat, float lon)
     {
+        m_TargetLatitude = lat;
+        m_TargetLongitude = lon;
         m_TargetPivotPoint = m_LondonMapPlane.LatLonToWorldPosition(lat, lon);
     }
 

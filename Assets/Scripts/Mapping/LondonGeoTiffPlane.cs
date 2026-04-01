@@ -6,7 +6,6 @@ public class LondonGeoTiffPlane : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float m_MapScale = 0.01f; // 1 unit = 100 meters
     
-    // The EXACT values from your QGIS screenshot
     private const double minX = -22228.9760;
     private const double maxX = -5844.9760;
     private const double minY = 6706475.0107;

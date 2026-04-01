@@ -33,6 +33,11 @@ public class InformationLayerToggleButton : MonoBehaviour
     /// </summary>
     public bool IsOn => m_IsOn;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public event Action<bool> OnToggleButtonChanged;
+
     private void Start()
     {
         m_OnButton.onClick.AddListener(() => SetState(true));
@@ -55,6 +60,7 @@ public class InformationLayerToggleButton : MonoBehaviour
         }
 
         m_IsOn = newState;
+        OnToggleButtonChanged?.Invoke(newState);
 
         ApplyVisuals();
     }
