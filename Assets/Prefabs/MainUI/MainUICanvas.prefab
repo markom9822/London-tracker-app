@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 31 MAR 26 19:16:02
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0f060a474b9fa1c498c55b2b8cd42ae0, type: 2}
+  m_sharedMaterial: {fileID: -1055076746616727606, guid: 0f060a474b9fa1c498c55b2b8cd42ae0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1090,6 +1090,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2183789194176457019}
     m_Modifications:
+    - target: {fileID: 395624769315813958, guid: 801f9073cf13666459a38bcbb313fc74, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1055076746616727606, guid: 0f060a474b9fa1c498c55b2b8cd42ae0, type: 2}
     - target: {fileID: 484792903045161166, guid: 801f9073cf13666459a38bcbb313fc74, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283190348
@@ -1493,6 +1497,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2183789194176457019}
     m_Modifications:
+    - target: {fileID: 395624769315813958, guid: 801f9073cf13666459a38bcbb313fc74, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 484792903045161166, guid: 801f9073cf13666459a38bcbb313fc74, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283190348
@@ -2029,6 +2037,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2183789194176457019}
     m_Modifications:
+    - target: {fileID: 395624769315813958, guid: 801f9073cf13666459a38bcbb313fc74, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1055076746616727606, guid: 0f060a474b9fa1c498c55b2b8cd42ae0, type: 2}
     - target: {fileID: 484792903045161166, guid: 801f9073cf13666459a38bcbb313fc74, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283190348
@@ -2307,6 +2319,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2183789194176457019}
     m_Modifications:
+    - target: {fileID: 395624769315813958, guid: 801f9073cf13666459a38bcbb313fc74, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1055076746616727606, guid: 0f060a474b9fa1c498c55b2b8cd42ae0, type: 2}
     - target: {fileID: 484792903045161166, guid: 801f9073cf13666459a38bcbb313fc74, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4283190348
