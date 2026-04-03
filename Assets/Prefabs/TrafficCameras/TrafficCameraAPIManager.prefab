@@ -45,5 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrafficCameraProvider
   m_MapCameraController: {fileID: 0}
-  m_AreaCircleVisual: {fileID: 0}
-  m_SearchRadius: 500
+  m_MapPlane: {fileID: 0}
+  m_MapAreaCircle: {fileID: 0}
+  m_SearchRadius: 1000
+  m_VisualPrefab: {fileID: 4774818937986685429, guid: 2f48c91b84e7a304ea1c21e33bd85f7a, type: 3}
+  m_VisualsContainer: {fileID: 0}
