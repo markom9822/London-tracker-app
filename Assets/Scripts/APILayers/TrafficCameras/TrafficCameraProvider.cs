@@ -8,7 +8,8 @@ using UnityEngine.Networking;
 public class TrafficCameraProvider : MapLayerDataProvider
 {
     [SerializeField] private MapCameraController m_MapCameraController;
-    [SerializeField] private float m_SearchRadius = 5f;
+    [SerializeField] private LondonMapAreaCircle m_MapAreaCircle;
+    [SerializeField, Tooltip("Search Radius in meters from the target")] private float m_SearchRadius = 500f;
     
     private const string BASE_URL = "https://api.tfl.gov.uk/Place/Type/JamCam/";
     
@@ -22,6 +23,17 @@ public class TrafficCameraProvider : MapLayerDataProvider
     /// </summary>
     public bool IsActive => m_IsActive;
 
+    private void Start()
+    {
+        m_MapAreaCircle.gameObject.SetActive(false);
+        m_MapCameraController.OnTargetPositionChanged += HandleTargetPositionChanged;
+    }
+
+    private void OnDestroy()
+    {
+        m_MapCameraController.OnTargetPositionChanged -= HandleTargetPositionChanged;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -29,6 +41,7 @@ public class TrafficCameraProvider : MapLayerDataProvider
     {
         m_IsActive = true;
         StartCoroutine(FetchData());
+        ShowMapAreaVisual(m_MapCameraController.TargetPivotPoint);
     }
 
     /// <summary>
@@ -39,7 +52,7 @@ public class TrafficCameraProvider : MapLayerDataProvider
         StopAllCoroutines();
         m_IsActive = false;
         m_IsLoading = false;
-        ClearMapIcons();
+        HideMapAreaVisual();
     }
 
     private IEnumerator FetchData()
@@ -76,5 +89,24 @@ public class TrafficCameraProvider : MapLayerDataProvider
         Debug.Log($"<color=green>[SUCCESS]</color> {ProviderID} Data Received.");
     }
 
-    private void ClearMapIcons() { /* Logic to remove sprites from UI */ }
+    private void HandleTargetPositionChanged(float lat, float lon, Vector3 targetPivotPos)
+    {
+        if (!m_IsActive)
+        {
+            return;
+        }
+        ShowMapAreaVisual(targetPivotPos);
+    }
+
+    private void ShowMapAreaVisual(Vector3 targetPivotPos)
+    {
+        m_MapAreaCircle.gameObject.SetActive(true);
+        m_MapAreaCircle.transform.position = targetPivotPos;
+        m_MapAreaCircle.SetAreaCircleScale(m_SearchRadius);
+    }
+
+    private void HideMapAreaVisual()
+    {
+        m_MapAreaCircle.gameObject.SetActive(false);
+    }
 }

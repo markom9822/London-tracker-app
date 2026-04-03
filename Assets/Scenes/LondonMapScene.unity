@@ -172,6 +172,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8957809721401062306, guid: b870b3ff9ff5264469acbbde9f5f0e18, type: 3}
+      propertyPath: m_MapAreaCircle
+      value: 
+      objectReference: {fileID: 1874077240}
+    - target: {fileID: 8957809721401062306, guid: b870b3ff9ff5264469acbbde9f5f0e18, type: 3}
+      propertyPath: m_LondonMapPlane
+      value: 
+      objectReference: {fileID: 943491916}
+    - target: {fileID: 8957809721401062306, guid: b870b3ff9ff5264469acbbde9f5f0e18, type: 3}
+      propertyPath: m_AreaCircleVisual
+      value: 
+      objectReference: {fileID: 1874077239}
+    - target: {fileID: 8957809721401062306, guid: b870b3ff9ff5264469acbbde9f5f0e18, type: 3}
       propertyPath: m_MapCameraController
       value: 
       objectReference: {fileID: 330585548}
@@ -501,6 +513,56 @@ Transform:
   m_Children:
   - {fileID: 943491912}
   m_Father: {fileID: 1372325139}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &728517291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 728517293}
+  - component: {fileID: 728517292}
+  m_Layer: 0
+  m_Name: Testing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &728517292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728517291}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85eb373083029dd439ee0dc4f61a0c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeasureOnLondonMap
+  m_LondonMapPlane: {fileID: 943491916}
+  m_LatLongPoint1: {x: 51.5055, y: -0.0754}
+  m_TestPointTransform: {fileID: 1375653632}
+  m_LatLongPosition1: {x: 56.43486, y: 0.001, z: -3.9227498}
+  m_DistanceBetweenPoints: 305.2608
+--- !u!4 &728517293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728517291}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 64.69, y: -0, z: -6.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1375653632}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
@@ -978,6 +1040,37 @@ Transform:
   - {fileID: 1311619150}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1375653631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1375653632}
+  m_Layer: 0
+  m_Name: TestPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1375653632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375653631}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.805, y: 0, z: 0.713}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 728517293}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1582465866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,13 +1159,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1874077239}
+  - component: {fileID: 1874077240}
   m_Layer: 0
   m_Name: CCTVAreaCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1874077239
 Transform:
   m_ObjectHideFlags: 0
@@ -1082,13 +1176,27 @@ Transform:
   m_GameObject: {fileID: 1874077238}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 56.09, y: 0.284, z: -3.63}
-  m_LocalScale: {x: 19.6, y: 19.6, z: 19.6}
+  m_LocalPosition: {x: 56.43, y: 0.284, z: -3.98}
+  m_LocalScale: {x: 19.947542, y: 19.947542, z: 19.947542}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 962403696}
   m_Father: {fileID: 1311619150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1874077240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874077238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb91300be538ab34fbf26fb8aa6a99e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LondonMapAreaCircle
+  m_LondonMapPlane: {fileID: 943491916}
+  m_ScaleToRadiusRatio: 30.5
 --- !u!1 &1929553153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3802,3 +3910,4 @@ SceneRoots:
   - {fileID: 925194292}
   - {fileID: 1372325139}
   - {fileID: 3903166660557302525}
+  - {fileID: 728517293}

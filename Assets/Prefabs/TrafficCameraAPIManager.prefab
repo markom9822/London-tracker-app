@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 348770eceef17bb49af5192cd389e20e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrafficCameraProvider
-  m_ApiUrl: https://api.tfl.gov.uk/Place/Type/JamCam/?lat=51.47&lon=-0.45&radius=5
+  m_MapCameraController: {fileID: 0}
+  m_AreaCircleVisual: {fileID: 0}
+  m_SearchRadius: 500

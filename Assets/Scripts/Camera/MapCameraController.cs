@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -25,6 +26,11 @@ public class MapCameraController : MonoBehaviour
     private Vector3 m_TargetPivotPoint;
     private float m_TargetLatitude;
     private float m_TargetLongitude;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public event Action<float, float, Vector3> OnTargetPositionChanged;
     
     /// <summary>
     /// 
@@ -58,6 +64,8 @@ public class MapCameraController : MonoBehaviour
         
         transform.rotation = Quaternion.Euler(m_RotationOffset);
         transform.position = m_TargetPivotPoint - (transform.forward * m_ViewDistance);
+        
+        OnTargetPositionChanged?.Invoke(lat, lon, m_TargetPivotPoint);
     }
 
     /// <summary>
@@ -68,6 +76,7 @@ public class MapCameraController : MonoBehaviour
         m_TargetLatitude = lat;
         m_TargetLongitude = lon;
         m_TargetPivotPoint = m_LondonMapPlane.LatLonToWorldPosition(lat, lon);
+        OnTargetPositionChanged?.Invoke(lat, lon, m_TargetPivotPoint);
     }
 
     private void Update()

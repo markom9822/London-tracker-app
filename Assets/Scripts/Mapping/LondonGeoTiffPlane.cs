@@ -33,6 +33,9 @@ public class LondonGeoTiffPlane : MonoBehaviour
         transform.position = Vector3.zero; 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public Vector3 LatLonToWorldPosition(double lat, double lon)
     {
         // 1. Convert Lat/Lon to Global Web Mercator Meters
@@ -44,5 +47,26 @@ public class LondonGeoTiffPlane : MonoBehaviour
         float localZ = (float)(yMeters - centerY) * m_MapScale;
 
         return new Vector3(localX, 0.1f * m_MapScale, localZ);
+    }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public Vector2 WorldPositionToLatLon(Vector3 worldPos)
+    {
+        // We assume the plane is at Vector3.zero as per SetupPlane()
+        double xMeters = (worldPos.x / m_MapScale) + centerX;
+        double yMeters = (worldPos.z / m_MapScale) + centerY;
+
+        // 2. Reverse Longitude: x / Radius
+        double lonRad = xMeters / EARTH_RADIUS;
+        double lon = lonRad * Mathf.Rad2Deg;
+
+        // 3. Reverse Latitude: Inverse of the Mercator log/tan formula
+        // This is: lat = 2 * atan(exp(y / R)) - PI / 2
+        double latRad = 2.0 * Math.Atan(Math.Exp(yMeters / EARTH_RADIUS)) - (Math.PI / 2.0);
+        double lat = latRad * Mathf.Rad2Deg;
+
+        return new Vector2((float)lat, (float)lon);
     }
 }

@@ -8,8 +8,6 @@ public class MainUIManager : MonoBehaviour
     [SerializeField] private LondonGeoTiffPlane m_LondonMapPlane;
     [SerializeField] private MapCameraController m_CameraController;
     
-
-
     /// <summary>
     /// 
     /// </summary>
