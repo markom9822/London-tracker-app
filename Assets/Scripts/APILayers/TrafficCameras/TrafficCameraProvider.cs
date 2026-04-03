@@ -54,8 +54,8 @@ public class TrafficCameraProvider : MapLayerDataProvider
     
     private bool m_IsActive = false;
     private bool m_IsLoading = false;
-    private List<TrafficCameraPoint> m_ActiveMarkers = new List<TrafficCameraPoint>();
-    private Stack<TrafficCameraPoint> m_MarkerPool = new Stack<TrafficCameraPoint>();
+    private List<TrafficCameraMarker> m_ActiveMarkers = new List<TrafficCameraMarker>();
+    private Stack<TrafficCameraMarker> m_MarkerPool = new Stack<TrafficCameraMarker>();
     
     public string ProviderID => "JAM_CAMS";
     
@@ -147,7 +147,7 @@ public class TrafficCameraProvider : MapLayerDataProvider
                     Debug.Log($"Camera: {cam.commonName} | Available: {isAvailable} | Lat: {cam.lat}");
                     
                     Vector3 worldPos = m_MapPlane.LatLonToWorldPosition(cam.lat, cam.lon);
-                    TrafficCameraPoint marker = GetCameraPoint();
+                    TrafficCameraMarker marker = GetCameraPoint();
                     marker.Setup(cam, worldPos);
                     m_ActiveMarkers.Add(marker);
                 }
@@ -159,18 +159,18 @@ public class TrafficCameraProvider : MapLayerDataProvider
         }
     }
     
-    private TrafficCameraPoint GetCameraPoint()
+    private TrafficCameraMarker GetCameraPoint()
     {
         if (m_MarkerPool.Count > 0)
         {
             return m_MarkerPool.Pop();
         }
-        return Instantiate(m_VisualPrefab, m_VisualsContainer).GetComponent<TrafficCameraPoint>();
+        return Instantiate(m_VisualPrefab, m_VisualsContainer).GetComponent<TrafficCameraMarker>();
     }
 
     private void ClearMarkers()
     {
-        foreach (TrafficCameraPoint marker in m_ActiveMarkers)
+        foreach (TrafficCameraMarker marker in m_ActiveMarkers)
         {
             marker.Deactivate();
             m_MarkerPool.Push(marker);

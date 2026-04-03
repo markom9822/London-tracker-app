@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -18,6 +19,4 @@ public class MainUIManager : MonoBehaviour
     /// 
     /// </summary>
     public MapCameraController CameraController => m_CameraController;
-
-
 }

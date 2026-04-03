@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1173406167374984083}
   - component: {fileID: 1221815568372161234}
   m_Layer: 0
-  m_Name: TrafficCameraPoint
-  m_TagString: Untagged
+  m_Name: TrafficCameraMarker
+  m_TagString: MapMarker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fd7eddb08c1be4c8e17083fc5d1b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrafficCameraPoint
-  CameraID: 
-  ImageUrl: 
+  m_Renderer: {fileID: 328722605707317387}
+  m_HoverColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7582392996383285282
 GameObject:
   m_ObjectHideFlags: 0
