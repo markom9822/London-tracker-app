@@ -366,7 +366,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 1349175134}
   m_Father: {fileID: 989630540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &737931851
@@ -634,7 +635,7 @@ Transform:
   m_GameObject: {fileID: 1161543059}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -30.9}
+  m_LocalPosition: {x: 0, y: 0, z: -14.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -688,6 +689,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1349175133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1349175134}
+  m_Layer: 0
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1349175134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349175133}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.504}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 737931850}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1655170593
 GameObject:
@@ -1070,8 +1102,8 @@ MonoBehaviour:
     m_Bottom: 10
   m_ChildAlignment: 4
   m_Spacing: 10
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
@@ -1633,7 +1665,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 503
+  m_PreferredWidth: 889
   m_PreferredHeight: 469
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
@@ -1973,12 +2005,16 @@ MonoBehaviour:
   m_CameraTransform: {fileID: 1161543063}
   m_MainCamera: {fileID: 1161543062}
   m_CursorMarker: {fileID: 913123805}
-  m_BaseRotationSpeed: 0.2
-  m_Damping: 5
-  m_ZoomSpeed: 10
-  m_MinZoomBuffer: 0.1
+  m_BaseRotationSpeed: 0.1
+  m_InertiaDamping: 0.8
+  m_VelocitySmoothSpeed: 15
+  m_Damping: 4
+  m_ZoomSensitivity: 0.15
+  m_MinZoomBuffer: 0.5
   m_MarkerBaseScale: 0.02
-  m_MaxRotationSharpness: 15
+  m_ScrollLockDuration: 0.8
+  m_MaxOrbitSharpness: 8
+  m_MinOrbitMultiplier: 0.5
 --- !u!114 &8838669570920330689
 MonoBehaviour:
   m_ObjectHideFlags: 0
