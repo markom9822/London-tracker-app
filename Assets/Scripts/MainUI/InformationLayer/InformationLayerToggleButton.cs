@@ -12,10 +12,6 @@ public class InformationLayerToggleButton : MonoBehaviour
     [SerializeField] private Button m_OnButton;
     [SerializeField] private Button m_OffButton;
     
-    [Header("Background Components")]
-    [SerializeField] private Image m_OnBackground;
-    [SerializeField] private Image m_OffBackground;
-    
     [Header("Text Components")]
     [SerializeField] private TextMeshProUGUI m_OnText;
     [SerializeField] private TextMeshProUGUI m_OffText;
@@ -69,16 +65,5 @@ public class InformationLayerToggleButton : MonoBehaviour
     {
         m_OnText.color = m_IsOn ? m_ActiveColor : m_InactiveColor;
         m_OffText.color = !m_IsOn ? m_ActiveColor : m_InactiveColor;
-
-        SetImageAlpha(m_OnBackground, m_IsOn ? m_PressedAlpha : m_ReleasedAlpha);
-        SetImageAlpha(m_OffBackground, !m_IsOn ? m_PressedAlpha : m_ReleasedAlpha);
-    }
-
-    private void SetImageAlpha(Image img, float alpha)
-    {
-        if (img == null) return;
-        Color c = img.color;
-        c.a = alpha;
-        img.color = c;
     }
 }
