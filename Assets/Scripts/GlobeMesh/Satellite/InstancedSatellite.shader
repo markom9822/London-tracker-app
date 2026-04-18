@@ -1,7 +1,6 @@
 Shader "CustomRenderTexture/InstancedSatellite"
 {
    Properties {
-        _Color ("Color", Color) = (1, 1, 0, 1) // Yellow for satellites
         _SatScale ("Satellite Scale", Float) = 0.05
     }
     SubShader {
@@ -17,13 +16,15 @@ Shader "CustomRenderTexture/InstancedSatellite"
             struct SatData {
                 float lat;
                 float lon;
-                float heading;  
+                float heading; // We use this as our Color Index
                 float altitude;
             };
 
             StructuredBuffer<SatData> _SatelliteDataBuffer;
             float4x4 _GlobeMatrix;
-            float4 _Color;
+            
+            // Array to hold the colors for each category
+            uniform float4 _CategoryColors[4]; 
             float _SatScale;
 
             struct appdata {
@@ -33,42 +34,35 @@ Shader "CustomRenderTexture/InstancedSatellite"
 
             struct v2f {
                 float4 pos : SV_POSITION;
+                fixed4 color : COLOR; // Pass color to fragment shader
             };
 
             v2f vert (appdata v) {
                 v2f o;
-
                 SatData data = _SatelliteDataBuffer[v.id];
 
-                // 1. Get the direction vector from the globe center
+                // --- NEW COLOR LOGIC ---
+                // Pick the color based on the heading (index)
+                int colorIdx = (int)data.heading;
+                o.color = _CategoryColors[colorIdx];
+                // -----------------------
+
                 float2 coords = float2(data.lon, data.lat) * (3.14159265 / 180.0);
                 float3 normal = longitudeLatitudeToPoint(coords);
 
-                // 2. Build Orientation Matrix (Standard Tangent Space)
                 float3 vUp = normal;
                 float3 vForward = float3(0, 1, 0); 
                 if (abs(dot(vUp, vForward)) > 0.99) vForward = float3(0, 0, 1);
                 float3 vRight = normalize(cross(vUp, vForward));
                 vForward = cross(vRight, vUp);
                 
-                // 3. Apply Heading (Yaw) rotation
-                float angle = data.heading * (3.14159265 / 180.0);
-                float s, c;
-                sincos(angle, s, c);
-
-                float3 rotatedRight = vRight * c + vForward * s;
-                float3 rotatedForward = vForward * c - vRight * s;
-                float3x3 orientMatrix = float3x3(rotatedRight, vUp, rotatedForward);
+                // We no longer rotate by heading because heading is our color index
+                // If you want rotation AND color, you'd need to add a new field to SatData
+                float3x3 orientMatrix = float3x3(vRight, vUp, vForward);
                 
-                // 4. Transform mesh locally
                 float3 localMeshVertex = mul(v.vertex.xyz * _SatScale, orientMatrix);
-
-                // 5. POSITIONING: Radius (0.5) + Altitude
-                // This is the key change for satellites
                 float totalRadius = 0.5 + data.altitude;
                 float3 localPosInOrbit = (normal * totalRadius) + localMeshVertex;
-
-                // 6. Final World Positioning
                 float3 worldPos = mul(_GlobeMatrix, float4(localPosInOrbit, 1.0)).xyz;
 
                 o.pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1.0));
@@ -76,7 +70,7 @@ Shader "CustomRenderTexture/InstancedSatellite"
             }
 
             fixed4 frag (v2f i) : SV_Target {
-                return _Color;
+                return i.color; // Use the per-instance color
             }
             ENDCG
         }

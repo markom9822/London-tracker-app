@@ -27,6 +27,8 @@ public class SatelliteRenderer : MonoBehaviour
 
     private List<SatelliteData> m_VisibleSatelliteList;
     private SatelliteData[] m_VisibleSatelliteArray;
+    private Material m_InstanceMaterial; 
+    private Color[] m_CategoryColorArray = new Color[4];
 
     /// <summary>
     /// 
@@ -40,6 +42,8 @@ public class SatelliteRenderer : MonoBehaviour
 
     private void Start() 
     {
+        m_InstanceMaterial = new Material(m_SatelliteMat);
+        
         m_VisibleSatelliteList = new List<SatelliteData>(m_MaxCount);
         m_VisibleSatelliteArray = new SatelliteData[m_MaxCount];
         m_SatelliteDataBuffer = new ComputeBuffer(m_MaxCount, 16);
@@ -53,6 +57,18 @@ public class SatelliteRenderer : MonoBehaviour
         lock(m_SatelliteLock) {
             m_CurrentSatellites = new List<SatelliteData>(newSatelliteData);
         }
+    }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public void SetCategoryColors(Color[] colors)
+    {
+        if (colors == null || colors.Length != 4)
+        {
+            return;
+        }
+        m_CategoryColorArray = colors;
     }
 
     private void LateUpdate() {
@@ -107,12 +123,13 @@ public class SatelliteRenderer : MonoBehaviour
         m_ArgsBuffer.SetData(args);
 
         // 4. Render
-        m_SatelliteMat.SetBuffer(SatelliteDataBufferID, m_SatelliteDataBuffer);
-        m_SatelliteMat.SetMatrix("_GlobeMatrix", m_GlobeTransform.localToWorldMatrix);
-
+        m_InstanceMaterial.SetBuffer(SatelliteDataBufferID, m_SatelliteDataBuffer);
+        m_InstanceMaterial.SetMatrix("_GlobeMatrix", m_GlobeTransform.localToWorldMatrix);
+        m_InstanceMaterial.SetColorArray("_CategoryColors", m_CategoryColorArray);
+        
         // Use a bounds that covers the whole globe area
         Bounds drawBounds = new Bounds(globePos, Vector3.one * 20f);
-        Graphics.DrawMeshInstancedIndirect(m_SatelliteMesh, 0, m_SatelliteMat, drawBounds, m_ArgsBuffer);
+        Graphics.DrawMeshInstancedIndirect(m_SatelliteMesh, 0, m_InstanceMaterial, drawBounds, m_ArgsBuffer);
     }
 
     private Vector3 GetSatelliteWorldPos(float lat, float lon, float altitude) {
@@ -130,8 +147,12 @@ public class SatelliteRenderer : MonoBehaviour
         return m_GlobeTransform.TransformPoint(localPos);
     }
 
-    private void OnDisable() 
+    private void OnDestroy() 
     {
+        if (m_InstanceMaterial != null)
+        {
+            Destroy(m_InstanceMaterial);
+        }
         m_SatelliteDataBuffer?.Release();
         m_ArgsBuffer?.Release();
     }
