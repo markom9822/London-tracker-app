@@ -2,6 +2,7 @@ Shader "CustomRenderTexture/InstancedShip"
 {
     Properties {
         _Color ("Color", Color) = (1,1,1,1)
+        _ShipScale ("Ship Scale", Float) = 0.1 
     }
     SubShader {
         Tags { "RenderType"="Opaque" }
@@ -9,7 +10,7 @@ Shader "CustomRenderTexture/InstancedShip"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma target 4.5 // Required for StructuredBuffers
+            #pragma target 4.5
             #include "UnityCG.cginc"
             #include "Assets/Scripts/ShaderCommon/GeoMath.hlsl"
 
@@ -18,14 +19,14 @@ Shader "CustomRenderTexture/InstancedShip"
                 float lon;
             };
 
-            // This is the GPU buffer containing all ship positions
             StructuredBuffer<ShipData> _ShipDataBuffer;
             float4x4 _GlobeMatrix;
             float4 _Color;
+            float _ShipScale; // Declare scale variable
 
             struct appdata {
                 float4 vertex : POSITION;
-                uint id : SV_InstanceID; // Use the built-in Instance ID
+                uint id : SV_InstanceID;
             };
 
             struct v2f {
@@ -35,19 +36,32 @@ Shader "CustomRenderTexture/InstancedShip"
             v2f vert (appdata v) {
                 v2f o;
 
-                // Grab the data for THIS specific instance from the buffer
                 ShipData data = _ShipDataBuffer[v.id];
 
+                // 1. Get the Surface Normal
                 float2 coords = float2(data.lon, data.lat) * (3.14159265 / 180.0);
-                float3 unitVector = longitudeLatitudeToPoint(coords);
+                float3 normal = longitudeLatitudeToPoint(coords);
 
-                float3 localSpherePos = unitVector * 0.505; 
-                float3 worldPosOnSurface = mul(_GlobeMatrix, float4(localSpherePos, 1.0)).xyz;
+                // 2. Build Orientation Matrix
+                float3 vUp = normal;
+                float3 vForward = float3(0, 1, 0); 
+                if (abs(dot(vUp, vForward)) > 0.99) vForward = float3(0, 0, 1);
                 
-                float3 shipVertex = v.vertex.xyz * 0.1; 
-                float3 finalWorldPos = worldPosOnSurface + shipVertex;
+                float3 vRight = normalize(cross(vUp, vForward));
+                vForward = cross(vRight, vUp);
 
-                o.pos = mul(UNITY_MATRIX_VP, float4(finalWorldPos, 1.0));
+                float3x3 orientMatrix = float3x3(vRight, vUp, vForward);
+
+                // 3. Use _ShipScale here instead of hardcoded 0.05
+                float3 localMeshVertex = mul(v.vertex.xyz * _ShipScale, orientMatrix);
+
+                // 4. Place on surface
+                float3 localPosOnSphere = (normal * 0.505) + localMeshVertex;
+
+                // 5. Apply Globe Transform
+                float3 worldPos = mul(_GlobeMatrix, float4(localPosOnSphere, 1.0)).xyz;
+
+                o.pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1.0));
                 return o;
             }
 
