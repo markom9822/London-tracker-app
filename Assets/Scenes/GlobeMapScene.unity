@@ -940,7 +940,7 @@ Transform:
   m_GameObject: {fileID: 1161543059}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.61}
+  m_LocalPosition: {x: 0, y: 0, z: -16.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1298,6 +1298,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2080110889}
+  - component: {fileID: 2080110890}
+  - component: {fileID: 2080110891}
   m_Layer: 0
   m_Name: SatelliteManager
   m_TagString: Untagged
@@ -1320,6 +1322,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1991286778}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2080110890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080110888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca09ec0b5d18a4f49ab6f11af1c8261e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SatelliteRenderer
+  m_SatelliteMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_SatelliteMat: {fileID: 2100000, guid: 626cb5f94a31db04aaf7ee0602b03bef, type: 2}
+  m_GlobeTransform: {fileID: 737931850}
+  m_MapCamera: {fileID: 1161543062}
+  m_MaxCount: 5000
+--- !u!114 &2080110891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080110888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 539a77d791ae53d41ad161fab6bc82cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SatelliteInfoClient
+  m_Renderer: {fileID: 2080110890}
+  m_IsActive: 1
+  m_TestSatelliteCount: 50
 --- !u!114 &216791988667894616
 MonoBehaviour:
   m_ObjectHideFlags: 0
