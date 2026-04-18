@@ -17,6 +17,7 @@ Shader "CustomRenderTexture/InstancedShip"
             struct ShipData {
                 float lat;
                 float lon;
+                float heading;
             };
 
             StructuredBuffer<ShipData> _ShipDataBuffer;
@@ -46,17 +47,25 @@ Shader "CustomRenderTexture/InstancedShip"
                 float3 vUp = normal;
                 float3 vForward = float3(0, 1, 0); 
                 if (abs(dot(vUp, vForward)) > 0.99) vForward = float3(0, 0, 1);
-                
                 float3 vRight = normalize(cross(vUp, vForward));
                 vForward = cross(vRight, vUp);
+                
+                // Convert degrees to radians
+                float angle = data.heading * (3.14159265 / 180.0);
+                float s, c;
+                sincos(angle, s, c);
 
-                float3x3 orientMatrix = float3x3(vRight, vUp, vForward);
+                // Rotate vRight and vForward around vUp
+                float3 rotatedRight = vRight * c + vForward * s;
+                float3 rotatedForward = vForward * c - vRight * s;
 
+                float3x3 orientMatrix = float3x3(rotatedRight, vUp, rotatedForward);
+                
                 // 3. Use _ShipScale here instead of hardcoded 0.05
                 float3 localMeshVertex = mul(v.vertex.xyz * _ShipScale, orientMatrix);
 
                 // 4. Place on surface
-                float3 localPosOnSphere = (normal * 0.505) + localMeshVertex;
+                float3 localPosOnSphere = (normal * 0.5) + localMeshVertex;
 
                 // 5. Apply Globe Transform
                 float3 worldPos = mul(_GlobeMatrix, float4(localPosOnSphere, 1.0)).xyz;

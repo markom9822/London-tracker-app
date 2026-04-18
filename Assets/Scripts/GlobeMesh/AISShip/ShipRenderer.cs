@@ -7,43 +7,59 @@ public class ShipRenderer : MonoBehaviour
     public Material shipMat;
     [SerializeField] private Transform m_GlobeTransform;
     [SerializeField] private Camera m_MapCamera;
+
+    // Max I can handle
     public int shipCount = 5000;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public Transform GlobeTransform => m_GlobeTransform;
+    
     private ComputeBuffer shipDataBuffer;
     private ComputeBuffer argsBuffer;
     private uint[] args = new uint[5] { 0, 0, 0, 0, 0 };
+    
+    private List<ShipData> currentShips = new List<ShipData>();
+    private readonly object shipLock = new object();
 
-    // Master list stored on CPU
-    private ShipData[] allShipData;
-    // Helper list to avoid re-allocating every frame
     private List<ShipData> visibleShipList;
-    // Buffer array to pass to SetData
     private ShipData[] visibleShipArray;
 
-    struct ShipData {
+    /// <summary>
+    /// 
+    /// </summary>
+    public struct ShipData {
         public float lat;
         public float lon;
+        public float heading;
     }
 
     void Start() {
-        allShipData = new ShipData[shipCount];
         visibleShipList = new List<ShipData>(shipCount);
         visibleShipArray = new ShipData[shipCount];
-
-        // Create the buffer (max size is shipCount)
-        shipDataBuffer = new ComputeBuffer(shipCount, 8);
-        
-        // Populate master data
-        for (int i = 0; i < shipCount; i++) {
-            allShipData[i].lat = Random.Range(-80f, 80f);
-            allShipData[i].lon = Random.Range(-180f, 180f);
-        }
-
+        shipDataBuffer = new ComputeBuffer(shipCount, 12);
         argsBuffer = new ComputeBuffer(1, 5 * sizeof(uint), ComputeBufferType.IndirectArguments);
+    }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public void UpdateShips(List<ShipData> newShipData) {
+        lock(shipLock) {
+            currentShips = new List<ShipData>(newShipData);
+        }
     }
 
     void LateUpdate() {
         if (shipMesh == null || shipMat == null || m_MapCamera == null) return;
+        
+        List<ShipData> shipsToRender;
+        lock(shipLock) {
+            shipsToRender = new List<ShipData>(currentShips);
+        }
+        
+        if (shipsToRender.Count == 0) return;
 
         // 1. Perform Culling
         visibleShipList.Clear();
@@ -51,18 +67,17 @@ public class ShipRenderer : MonoBehaviour
         Vector3 camPos = m_MapCamera.transform.position;
         Vector3 globePos = m_GlobeTransform.position;
 
-        for (int i = 0; i < shipCount; i++) {
-            Vector3 worldPos = GetShipWorldPos(allShipData[i].lat, allShipData[i].lon);
+        for (int i = 0; i < shipsToRender.Count; i++) {
+            Vector3 worldPos = GetShipWorldPos(shipsToRender[i].lat, shipsToRender[i].lon);
 
-            // A. Horizon Culling (Dot product)
+            // A. Horizon Culling
             Vector3 dirToShip = (worldPos - camPos).normalized;
             Vector3 globeNormal = (worldPos - globePos).normalized;
             if (Vector3.Dot(dirToShip, globeNormal) > 0.1f) continue;
 
             // B. Frustum Culling
-            // Using 0.5f bounds to ensure larger ship meshes aren't clipped aggressively
             if (GeometryUtility.TestPlanesAABB(planes, new Bounds(worldPos, Vector3.one * 0.5f))) {
-                visibleShipList.Add(allShipData[i]);
+                visibleShipList.Add(shipsToRender[i]);
             }
         }
 
@@ -103,7 +118,7 @@ public class ShipRenderer : MonoBehaviour
         float z = -Mathf.Cos(radLon) * r;
 
         // 0.5 radius (for scale 10 globe) + small offset
-        Vector3 localPos = new Vector3(x, y, z) * 0.505f;
+        Vector3 localPos = new Vector3(x, y, z) * 0.5f;
         return m_GlobeTransform.TransformPoint(localPos);
     }
 

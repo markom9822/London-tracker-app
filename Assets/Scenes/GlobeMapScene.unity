@@ -956,6 +956,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1291902376}
   - component: {fileID: 1291902377}
+  - component: {fileID: 1291902378}
   m_Layer: 0
   m_Name: AISManager
   m_TagString: Untagged
@@ -994,7 +995,27 @@ MonoBehaviour:
   shipMat: {fileID: 2100000, guid: 3abfc9cc8f9cccc43b2aa2019e0cc7fa, type: 2}
   m_GlobeTransform: {fileID: 737931850}
   m_MapCamera: {fileID: 1161543062}
-  shipCount: 3012
+  shipCount: 5000
+--- !u!114 &1291902378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291902375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0c9c1db0559b0439965ebefa165896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AISMaritimeTrafficClient
+  m_IsActive: 0
+  apiKey: 0f73582cec19af95806279e5b6d92d9002f92c35
+  m_ShipRenderer: {fileID: 1291902377}
+  areasToTrack:
+  - minLat: 49.2
+    minLon: -6.93
+    maxLat: 51.8
+    maxLon: 3.1
 --- !u!1 &1334782394
 GameObject:
   m_ObjectHideFlags: 0
